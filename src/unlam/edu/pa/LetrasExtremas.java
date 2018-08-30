@@ -4,39 +4,48 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class LetrasExtremas {
 	public static void main(String args[]) throws IOException {
 		int fPalabraDuplicada;
 		int[] contLetras = new int[26];
 		char[] letrasMax = new char[26];
+		String palabraActual;
+		ArrayList<String> palabras = new ArrayList<>();
 		inicializaVectorEntero(contLetras);
 		File entrada = new File("extremas.in");
 		Scanner sc = new Scanner(entrada);
-		String[] palabras = new String[sc.nextInt()];
+		int cantPalabras = sc.nextInt();
 
-		for (int i = 0; i < palabras.length; i++) {
-			palabras[i] = sc.next();
-			contLetras[palabras[i].charAt(0) - 97]++;
-			contLetras[palabras[i].charAt(palabras[i].length() - 1) - 97]++;
+		for (int i = 0; i < cantPalabras; i++) {
+			palabraActual = sc.next();
+			contLetras[palabraActual.charAt(0) - 97]++;
+			contLetras[palabraActual.charAt(palabraActual.length() - 1) - 97]++;
+			palabras.add(palabraActual);
 		}
+
 		letrasMax = devuelveLetrasMayores(contLetras);
+		Set<String> palabrasSinRepetir = new HashSet<String>(palabras);
+		palabras.clear();
+		palabras.addAll(palabrasSinRepetir);
 		PrintWriter salida = new PrintWriter(new FileWriter("extremas.out"));
 		for (int i = 0; i < letrasMax.length; i++) {
 			if (letrasMax[i] != 0)
 				salida.print(letrasMax[i] + " ");
 		}
 		salida.println();
-		for (int i = 0; i < palabras.length; i++) {
+		for (int i = 0; i < palabras.size(); i++) {
 			fPalabraDuplicada = 0;
 			for (int j = 0; j < letrasMax.length; j++) {
-				if ((palabras[i].charAt(0) == letrasMax[j]
-						|| palabras[i].charAt(palabras[i].length()-1) == letrasMax[j]) && fPalabraDuplicada == 0) {
-					{
-						salida.println(palabras[i]);
-						fPalabraDuplicada = 1;
-					}
+				if ((palabras.get(i).charAt(0) == letrasMax[j]
+						|| palabras.get(i).charAt(palabras.get(i).length() - 1) == letrasMax[j])
+						&& fPalabraDuplicada == 0) {
+					salida.println(palabras.get(i));
+					fPalabraDuplicada = 1;
 				}
 			}
 		}
