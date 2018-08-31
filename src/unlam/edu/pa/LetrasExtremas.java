@@ -11,13 +11,14 @@ import java.util.Set;
 
 public class LetrasExtremas {
 	public static void main(String args[]) throws IOException {
+		String path = "archivos\\";
 		int fPalabraDuplicada;
 		int[] contLetras = new int[26];
 		char[] letrasMax = new char[26];
 		String palabraActual;
 		ArrayList<String> palabras = new ArrayList<>();
 		inicializaVectorEntero(contLetras);
-		File entrada = new File("extremas.in");
+		File entrada = new File(path + "extremas.in");
 		Scanner sc = new Scanner(entrada);
 		int cantPalabras = sc.nextInt();
 
@@ -32,7 +33,7 @@ public class LetrasExtremas {
 		Set<String> palabrasSinRepetir = new HashSet<String>(palabras);
 		palabras.clear();
 		palabras.addAll(palabrasSinRepetir);
-		PrintWriter salida = new PrintWriter(new FileWriter("extremas.out"));
+		PrintWriter salida = new PrintWriter(new FileWriter(path + "extremas.out"));
 		for (int i = 0; i < letrasMax.length; i++) {
 			if (letrasMax[i] != 0)
 				salida.print(letrasMax[i] + " ");
